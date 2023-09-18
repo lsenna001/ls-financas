@@ -13,14 +13,51 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/**
+ * Página inicial
+ */
 Route::get('/', function () {
     return view('home');
 });
 
+/**
+ * Página de Login
+ */
 Route::get('/login', function () {
     return view('login');
 });
 
+/**
+ * Página de Registro
+ */
 Route::get('/registrar', function () {
     return view('registrar');
 });
+
+/**
+ * Módulo de finanças
+ */
+Route::prefix('financas')->group(function () {
+    Route::get('/receitas', function () {
+        return view('receitas/receitas_list');
+    });
+
+    Route::get('/despesas', function () {
+        return view('despesas/despesas_list');
+    });
+
+    Route::get('/gastos', function () {
+        return view('gastos/gastos_list');
+    });
+});
+
+/**
+ * Módulo de Usuários
+ */
+Route::prefix('users')->group(function () {
+    Route::get('/', function () {
+        return view('usuarios/usuarios_list');
+    });
+});
+
+

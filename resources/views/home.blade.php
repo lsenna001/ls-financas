@@ -1,8 +1,8 @@
 @extends('base/base')
 
 @section('content')
-<div class="container">
-    <h3 class="fs-2 text-white">Dashboard</h3>
+<div class="container bg-white p-4 rounded text-center">
+    <h3 class="fs-2">Dashboard</h3>
     <div class="row">
         <div class="col-md-3 col-sm-6 col-12 my-1">
             <div class="d-flex justify-content-between align-items-center rounded border-start border-primary border-4 bg-body-tertiary py-3">

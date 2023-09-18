@@ -1,8 +1,7 @@
 <nav class="navbar navbar-expand-md bg-primary mb-3">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">LS Finanças</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
-            aria-controls="navbar" aria-expanded="false" aria-label="Abrir/Fechar navegação">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Abrir/Fechar navegação">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbar">
@@ -17,14 +16,20 @@
                     <ul class="dropdown-menu">
                         <li>
                             <a class="dropdown-item" href="/financas/receitas">
-                                <i class="fa fa-plus-circle"></i>
+                                <i class="fas fa-wallet"></i>
                                 <span>Receitas</span>
                             </a>
                         </li>
                         <li>
                             <a class="dropdown-item" href="/financas/despesas">
-                                <i class="fa fa-search"></i>
-                                <span>Despesas</span>
+                                <i class="fas fa-hand-holding-usd"></i>
+                                <span>Despesas Fixas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/financas/gastos">
+                                <i class="fas fa-money-bill-wave-alt"></i>
+                                <span>Gastos</span>
                             </a>
                         </li>
                     </ul>
