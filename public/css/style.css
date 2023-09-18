@@ -1,0 +1,23 @@
+body{
+    background-image: url('../img/background.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#form_login .container{
+    width: 22rem;
+}
+
+.text-primary{
+    color: #4e73df!important;
+}
+
+.border-primary{
+    border-color: #4e73df!important;
+}
+
+.bg-primary,
+.btn-primary{
+    background-color: #4e73df!important;
+}
