@@ -10,17 +10,12 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body class="d-flex flex-column h-100 text-center">
-    <div class="d-flex flex-column w-100 h-100">
-        <header>
-            @include('base/navbar')
-        </header>
-        <main class="my-auto">
-            @yield('content')
-        </main>
+<body >
+    @include('base/navbar')
+    <main class="d-flex justify-content-center">
+        @yield('content')
+    </main>
 
-    </div>
-    @include('base/footer')
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="chart/dist/chart.umd.js"></script>
     <script src="js/charts.js"></script>

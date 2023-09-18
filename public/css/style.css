@@ -1,12 +1,16 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body{
     background-image: url('../img/background.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-}
-
-#form_login .container{
-    width: 22rem;
+    background-attachment: fixed;
+    height: auto;
 }
 
 .text-primary{
