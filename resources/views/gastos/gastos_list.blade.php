@@ -4,7 +4,7 @@
 <div class="container flex-column bg-white p-3 rounded">
     <div class="d-flex justify-content-between">
         <h3 class="fs-3">Gastos</h3>
-        <a class="btn btn-warning rounded-pill">
+        <a class="btn btn-warning rounded-pill" href="/financas/gastos/novo">
             <i class="fa fa-info-circle"></i>
             <span>Informar novo gasto</span>
         </a>
@@ -40,11 +40,17 @@
             </tr>
             @endif
         </tbody>
+        <tfoot>
+            <tr>
+                <th scope="col">Total:</th>
+                <th scope="col" colspan="2" class="text-danger">R$ 0,00</th>
+            </tr>
+        </tfoot>
     </table>
     <hr class="mt-5">
     <div class="d-flex justify-content-between">
         <h3 class="fs-3">Gastos</h3>
-        <a class="btn btn-warning rounded-pill">
+        <a class="btn btn-warning rounded-pill" href="/financas/gastos/novo">
             <i class="fa fa-info-circle"></i>
             <span>Informar novo gasto</span>
         </a>
@@ -96,6 +102,12 @@
                 </td>
             </tr>
         </tbody>
+        <tfoot>
+            <tr>
+                <th scope="col">Total:</th>
+                <th scope="col" colspan="2" class="text-danger">R$ 1.700,00</th>
+            </tr>
+        </tfoot>
     </table>
 </div>
 @endsection

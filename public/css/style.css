@@ -13,15 +13,66 @@ body{
     height: auto;
 }
 
+#loginIcone{
+    width: 70px;
+}
+
 .text-primary{
     color: #4e73df!important;
+}
+
+.text-danger{
+    color: #e74a3b!important;
+}
+
+.text-alert{
+    color: #fd7e14!important;
+}
+
+.text-warning{
+    color: #f6c23e!important;
+}
+
+.text-info{
+    color: #20c997!important;
 }
 
 .border-primary{
     border-color: #4e73df!important;
 }
 
+.border-danger{
+    border-color: #e74a3b!important;
+}
+
+.border-alert{
+    border-color: #fd7e14!important;
+}
+
+.border-warning{
+    border-color: #f6c23e!important;
+}
+
+.border-info{
+    border-color: #20c997!important;
+}
+
 .bg-primary,
 .btn-primary{
     background-color: #4e72dfef!important;
+}
+
+.bg-danger,
+.btn-danger{
+    background-color: #e74a3b!important;
+}
+
+.bg-warning,
+.btn-warning{
+    background-color: #f6c23e!important;
+}
+
+.bg-info,
+.btn-info{
+    background-color: #20c997!important;
 }

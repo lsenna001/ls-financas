@@ -4,7 +4,7 @@
 <div class="container flex-column bg-white p-3 rounded">
     <div class="d-flex justify-content-between">
         <h3 class="fs-3">Receitas</h3>
-        <a class="btn btn-success rounded-pill">
+        <a class="btn btn-success rounded-pill" href="/financas/receitas/nova">
             <i class="fa fa-plus"></i>
             <span>Adicionar Receita</span>
         </a>
@@ -40,6 +40,12 @@
             </tr>
             @endif
         </tbody>
+        <tfoot>
+            <tr>
+                <th scope="col">Total:</th>
+                <th scope="col" colspan="2" class="text-primary">R$ 0,00</th>
+            </tr>
+        </tfoot>
     </table>
     <hr class="mt-5">
     <div class="d-flex justify-content-between">
@@ -96,6 +102,12 @@
                 </td>
             </tr>
         </tbody>
+        <tfoot>
+            <tr>
+                <th scope="col">Total:</th>
+                <th scope="col" colspan="2" class="text-primary">R$ 10.200,00</th>
+            </tr>
+        </tfoot>
     </table>
 </div>
 @endsection

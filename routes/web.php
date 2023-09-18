@@ -38,26 +38,47 @@ Route::get('/registrar', function () {
  * Módulo de finanças
  */
 Route::prefix('financas')->group(function () {
-    Route::get('/receitas', function () {
-        return view('receitas/receitas_list');
+
+    Route::prefix('receitas')->group(function () {
+        Route::get('/', function () {
+            return view('receitas/receitas_list');
+        });
+
+        Route::get('/nova', function () {
+            return view('receitas/receitas_form');
+        });
     });
 
-    Route::get('/despesas', function () {
-        return view('despesas/despesas_list');
+    Route::prefix('despesas')->group(function () {
+        Route::get('/', function () {
+            return view('despesas/despesas_list');
+        });
+
+        Route::get('/nova', function () {
+            return view('despesas/despesas_form');
+        });
     });
 
-    Route::get('/gastos', function () {
-        return view('gastos/gastos_list');
+    Route::prefix('gastos')->group(function () {
+        Route::get('/', function () {
+            return view('gastos/gastos_list');
+        });
+
+        Route::get('/novo', function () {
+            return view('gastos/gastos_form');
+        });
     });
 });
 
 /**
  * Módulo de Usuários
  */
-Route::prefix('users')->group(function () {
+Route::prefix('usuarios')->group(function () {
     Route::get('/', function () {
         return view('usuarios/usuarios_list');
     });
+
+    Route::get('/mudar-senha', function () {
+        return view('usuarios/usuarios_reset');      
+    });
 });
-
-

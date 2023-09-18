@@ -4,7 +4,7 @@
 <div class="container flex-column bg-white p-3 rounded">
     <div class="d-flex justify-content-between">
         <h3 class="fs-3">Despesas Fixas</h3>
-        <a class="btn btn-success rounded-pill">
+        <a class="btn btn-success rounded-pill" href="/financas/despesas/nova">
             <i class="fa fa-plus"></i>
             <span>Adicionar Despesa</span>
         </a>
@@ -40,11 +40,17 @@
             </tr>
             @endif
         </tbody>
+        <tfoot>
+            <tr>
+                <th scope="col">Total:</th>
+                <th scope="col" colspan="2" class="text-warning">R$ 0,00</th>
+            </tr>
+        </tfoot>
     </table>
     <hr class="mt-5">
     <div class="d-flex justify-content-between">
         <h3 class="fs-3">Despesas Fixas</h3>
-        <a class="btn btn-success rounded-pill">
+        <a class="btn btn-success rounded-pill" href="/financas/despesas/nova">
             <i class="fa fa-plus"></i>
             <span>Adicionar Despesa</span>
         </a>
@@ -96,6 +102,12 @@
                 </td>
             </tr>
         </tbody>
+        <tfoot>
+            <tr>
+                <th scope="col">Total:</th>
+                <th scope="col" colspan="2" class="text-warning">R$ 3.300,00</th>
+            </tr>
+        </tfoot>
     </table>
 </div>
 
