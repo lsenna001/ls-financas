@@ -20,7 +20,7 @@
             <input type="text" name="valor" class="form-control money" placeholder="Valor Recebido" value="{{isset($receita) ? $receita['valor'] : ''}}">
         </div>
         <div class="d-flex">
-            <a href="{{route('receitas.index')}}" class="btn btn-sm btn-warning p-2 m-1 w-50">
+            <a href="{{route('receitas.index')}}" class="btn btn-sm btn-warning p-2 m-1 w-50 text-white">
                 <i class="fa fa-arrow-left"></i>
                 <span>Voltar</span>
             </a>

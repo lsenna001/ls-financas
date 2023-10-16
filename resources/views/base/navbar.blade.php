@@ -22,13 +22,13 @@
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="">
+                            <a class="dropdown-item {{$activeDespesas ?? ''}}" href="{{route('despesas.index')}}">
                                 <i class="fas fa-hand-holding-usd"></i>
                                 <span>Despesas Fixas</span>
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="">
+                            <a class="dropdown-item {{$activeGastos ?? ''}}" href="">
                                 <i class="fas fa-money-bill-wave-alt"></i>
                                 <span>Gastos</span>
                             </a>

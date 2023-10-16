@@ -19,7 +19,7 @@
             </tr>
         </thead>
         <tbody>
-            @if(isset($receitas))
+            @if(!empty($receitas))
             @foreach($receitas as $r)
             <tr>
                 <td>{{$r['empresa']}}</td>
@@ -29,11 +29,11 @@
                         <i class="fa fa-edit"></i>
                         Editar
                     </a>
-                    <a href="{{route('receitas.index')}}" class="btn btn-sm btn-danger rounded-pill" onclick="event.preventDefault();document.querySelector('#deleteReceita').submit()">
+                    <a href="{{route('receitas.index')}}" class="btn btn-sm btn-danger rounded-pill" onclick="event.preventDefault();document.querySelector('#deleteReceita{{$r['id_receita']}}').submit()">
                         <i class="fa fa-trash"></i>
                         Remover
                     </a>
-                    <form id="deleteReceita" action="{{route('receitas.destroy', $r['id_receita'])}}" method="POST">@csrf @method('delete')</form>
+                    <form id="deleteReceita{{$r['id_receita']}}" action="{{route('receitas.destroy', $r['id_receita'])}}" method="POST">@csrf @method('delete')</form>
                 </td>
             </tr>
             @endforeach
