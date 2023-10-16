@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,72 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/**
- * Página inicial
- */
 Route::get('/', function () {
-    return view('home');
+    return view('welcome');
 });
 
-/**
- * Página de Login
- */
-Route::get('/login', function () {
-    return view('login');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-/**
- * Página de Registro
- */
-Route::get('/registrar', function () {
-    return view('registrar');
-});
-
-/**
- * Módulo de finanças
- */
-Route::prefix('financas')->group(function () {
-
-    Route::prefix('receitas')->group(function () {
-        Route::get('/', function () {
-            return view('receitas/receitas_list');
-        });
-
-        Route::get('/nova', function () {
-            return view('receitas/receitas_form');
-        });
-    });
-
-    Route::prefix('despesas')->group(function () {
-        Route::get('/', function () {
-            return view('despesas/despesas_list');
-        });
-
-        Route::get('/nova', function () {
-            return view('despesas/despesas_form');
-        });
-    });
-
-    Route::prefix('gastos')->group(function () {
-        Route::get('/', function () {
-            return view('gastos/gastos_list');
-        });
-
-        Route::get('/novo', function () {
-            return view('gastos/gastos_form');
-        });
-    });
-});
-
-/**
- * Módulo de Usuários
- */
-Route::prefix('usuarios')->group(function () {
-    Route::get('/', function () {
-        return view('usuarios/usuarios_list');
-    });
-
-    Route::get('/mudar-senha', function () {
-        return view('usuarios/usuarios_reset');      
-    });
-});
+require __DIR__.'/auth.php';
