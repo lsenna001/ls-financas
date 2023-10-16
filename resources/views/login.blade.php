@@ -5,7 +5,7 @@
 <div class="bg-white rounded text-center p-3 shadow-lg">
     <img src="{{asset('img/login.png')}}" id="loginIcone">
     <h3 class="mb-3 fw-normal">Login</h3>
-    <form method="POST" class="p-2">
+    <form action="{{route('login')}}" method="POST" class="p-2">
         @csrf
         <div class="form-floating">
             <input type="email" name="email" id="email" class="form-control" placeholder="Email">
@@ -20,7 +20,7 @@
                 <i class="fa fa-sign-in-alt"></i>
                 <span>Entrar</span>
             </button>
-            <a href="/registrar" class="btn btn-sm btn-info text-white w-100 m-1 p-2">
+            <a href="{{route('register')}}" class="btn btn-sm btn-info text-white w-100 m-1 p-2">
                 <i class="fa fa-edit"></i>
                 <span>Registre-Se</span>
             </a>

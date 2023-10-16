@@ -11,15 +11,20 @@
     <link rel="icon" href="{{asset('img/login.png')}}">
 </head>
 
-<body >
+<body>
     @include('base/navbar')
+
+    @if(session('msg'))
+    <div class="alert alert-{{session('msg')['type']}} alert-dismissible fade show container" role="alert">
+        <strong><i class="fa fa-info-circle"></i></strong> {{session('msg')['msg']}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
     <main class="d-flex justify-content-center">
         @yield('content')
     </main>
 
-    <script src="{{asset('bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-    <script src="{{asset('chart/dist/chart.umd.js')}}"></script>
-    <script src="{{asset('js/charts.js')}}"></script>
+    @include('base/js')
 </body>
 
 </html>
