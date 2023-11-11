@@ -28,7 +28,22 @@ class LoginRequest extends FormRequest
     {
         return [
             'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string'],
+            'password' => ['required'],
+        ];
+    }
+
+    /**
+     * Define as mensagens de validação
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'email.required' => 'O campo Email é obrigatório',
+            'email.string' => 'O campo email precisa ter texto',
+            'email.email' => 'O campo email precisa ser um email válido',
+            'password.required' => 'O campo Senha é obrigatório',
+            'auth.failed' => 'Usuário ou senha incorreto'
         ];
     }
 
@@ -45,7 +60,7 @@ class LoginRequest extends FormRequest
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => "Usuário ou senha incorretos"
             ]);
         }
 

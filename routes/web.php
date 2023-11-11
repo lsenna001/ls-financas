@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{HomeController, ProfileController, ReceitaController, DespesaController};
+use App\Http\Controllers\{HomeController, ProfileController, ReceitaController, DespesaController, GastoController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +19,7 @@ Route::get('/', [HomeController::class, 'index'])->name('dashboard')->middleware
 Route::middleware('auth')->prefix('financas')->group(function() {
     Route::resource('receitas', ReceitaController::class)->names('receitas');
     Route::resource('despesas', DespesaController::class)->names('despesas');
+    Route::resource('gastos', GastoController::class)->names('gastos');
 });
 
 Route::get('/dashboard', function () {

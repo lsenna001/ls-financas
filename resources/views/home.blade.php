@@ -8,7 +8,7 @@
             <div class="d-flex justify-content-between align-items-center rounded border-start border-primary border-4 bg-body-tertiary py-3">
                 <div class="d-flex flex-column px-2">
                     <div class="fs-6 text-primary">Renda Mensal</div>
-                    <div class="fs-6">R$ 12.500,00</div>
+                    <div class="fs-6">R$ {{ number_format($receita, 2, ',', '.') }}</div>
                 </div>
                 <i class="fa fa-dollar-sign fa-2x text-primary pe-4"></i>
             </div>
@@ -17,7 +17,7 @@
             <div class="d-flex justify-content-between align-items-center rounded border-start border-warning border-4 bg-body-tertiary py-3">
                 <div class="d-flex flex-column px-2">
                     <div class="fs-6 text-warning">Despesas Fixas</div>
-                    <div class="fs-6">R$ 4.750,00</div>
+                    <div class="fs-6">R$ {{ number_format($despesa, 2, ',', '.') }}</div>
                 </div>
                 <i class="fa fa-envelope-open fa-2x text-warning pe-4"></i>
             </div>
@@ -35,7 +35,7 @@
             <div class="d-flex justify-content-between align-items-center rounded border-start border-success border-4 bg-body-tertiary py-3">
                 <div class="d-flex flex-column px-2">
                     <div class="fs-6 text-success">Orçamento</div>
-                    <div class="fs-6">R$ 5.450,00</div>
+                    <div class="fs-6">R$ {{ number_format($receita - $despesa, 2, ',', '.') }}</div>
                 </div>
                 <i class="fa fa-envelope-open fa-2x text-success pe-4"></i>
             </div>
@@ -85,13 +85,7 @@
                     <canvas id="despesasCategoria"></canvas>
                 </div>
             </div>
-
-
         </div>
     </div>
-
-
 </div>
-
-
 @endsection

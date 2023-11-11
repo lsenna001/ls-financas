@@ -8,12 +8,22 @@
     <form action="{{route('login')}}" method="POST" class="p-2">
         @csrf
         <div class="form-floating">
-            <input type="email" name="email" id="email" class="form-control" placeholder="Email">
+            <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" value="{{ old('email') }}">
             <label for="email">Email</label>
+            @error('email')
+            <div class="invalid-feedback">
+                {{$errors->first('email')}}
+            </div>
+            @enderror
         </div>
         <div class="form-floating py-2">
-            <input type="password" name="password" id="password" class="form-control" placeholder="Senha">
+            <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" placeholder="Senha">
             <label for="password">Senha</label>
+            @error('password')
+                <div class="invalid-feedback">
+                    {{$errors->first('password')}}
+                </div>
+            @enderror
         </div>
         <div class="d-flex flex-column">
             <button class="btn btn-sm btn-primary w-100 m-1 p-2">

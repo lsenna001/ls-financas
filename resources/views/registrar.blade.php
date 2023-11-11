@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col input-group">
                 <span class="input-group-text">Nome</span>
-                <input type="text" name="nome" id="nome" class="form-control" placeholder="Nome">
+                <input type="text" name="name" id="nome" class="form-control" placeholder="Nome">
             </div>
             <div class="col input-group">
                 <span class="input-group-text">Sobrenome</span>
@@ -30,7 +30,7 @@
         <div class="row my-2">
             <div class="input-group">
                 <span class="input-group-text">Confirme a senha</span>
-                <input type="password" name="csenha" id="csenha" class="form-control" placeholder="Confirme a Senha">
+                <input type="password" name="senha_confirmation" id="csenha" class="form-control" placeholder="Confirme a Senha">
             </div>
         </div>
         <button class="btn btn-sm btn-primary w-100 p-2">

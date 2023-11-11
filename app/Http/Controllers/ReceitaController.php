@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\Receita;
@@ -14,8 +15,8 @@ class ReceitaController extends Controller
      */
     public function index() : View
     {
-        $userId = auth()->user()->id;
-        $receitas = Receita::where('user_id', '=', $userId)->get()->toArray();
+        $receitas = Receita::getReceitas(auth()->user()->id);
+
         $total = array_sum(array_column($receitas, 'valor'));
 
         return view('receitas/list', ['receitas' => $receitas, 'total' => $total, 'activeReceitas' => 'active']);
@@ -47,7 +48,6 @@ class ReceitaController extends Controller
 
         $receita->save();
 
-        
         return redirect(route('receitas.index'))->with('msg', ['type' => 'success', 'msg' => 'Receita inserida com sucesso!']);
     }
 
@@ -73,7 +73,7 @@ class ReceitaController extends Controller
         $valor = str_replace('.', '', $request->valor);
         $valor = str_replace(',', '.', $valor);
         $receita->valor = $valor;
-        
+
         $receita->update();
 
         return redirect(route('receitas.index'))->with('msg',['type' => 'success', 'msg' => 'Receita atualizada!']);

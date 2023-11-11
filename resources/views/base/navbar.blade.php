@@ -28,7 +28,7 @@
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item {{$activeGastos ?? ''}}" href="">
+                            <a class="dropdown-item {{$activeGastos ?? ''}}" href="{{ route('gastos.index') }}">
                                 <i class="fas fa-money-bill-wave-alt"></i>
                                 <span>Gastos</span>
                             </a>
