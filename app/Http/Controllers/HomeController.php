@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Despesa;
 use App\Models\Receita;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class HomeController extends Controller

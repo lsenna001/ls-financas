@@ -1,6 +1,12 @@
 <?php
 
-use App\Http\Controllers\{HomeController, ProfileController, ReceitaController, DespesaController, GastoController};
+use App\Http\Controllers\{Auth\AuthController,
+    Auth\PasswordController,
+    Auth\RegisterController,
+    DespesaController,
+    GastoController,
+    HomeController,
+    ReceitaController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,20 +22,26 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('dashboard')->middleware('auth');
 
+/**
+ * Rotas de Autenticação
+ */
+Route::get('/login', [AuthController::class, 'index'])->name('login.index');
+Route::post('/login', [AuthController::class, 'store'])->name('login.store');
+Route::get('/registrar', [RegisterController::class, 'index'])->name('registrar.index');
+Route::post('/registrar', [RegisterController::class, 'store'])->name('registrar.store');
+Route::post('/logout', [AuthController::class, 'destroy'])->name('login.destroy')->middleware('auth');
+
+/**
+ * Rotas de Alterar a senha
+ */
+Route::get('/alterar-senha', [PasswordController::class, 'index'])->name('password.index')->middleware('auth');
+Route::post('/alterar-senha', [PasswordController::class, 'store'])->name('password.store')->middleware('auth');
+
+/**
+ * Rotas para finanças
+ */
 Route::middleware('auth')->prefix('financas')->group(function() {
     Route::resource('receitas', ReceitaController::class)->names('receitas');
     Route::resource('despesas', DespesaController::class)->names('despesas');
     Route::resource('gastos', GastoController::class)->names('gastos');
 });
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('profile');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
-require __DIR__.'/auth.php';

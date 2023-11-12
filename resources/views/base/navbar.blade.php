@@ -41,20 +41,20 @@
                 </li>
                 @endcan
                 <li class="nav-item">
-                    <a href="" class="nav-link text-white">Alterar Senha</a>
+                    <a href="{{ route('password.index') }}" class="nav-link text-white">Alterar Senha</a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link text-white" onclick="event.preventDefault();document.querySelector('#logout').submit()">
+                    <a href="{{ route('login.destroy') }}" class="nav-link text-white" onclick="event.preventDefault();document.querySelector('#logout').submit()">
                         Deslogar
                     </a>
-                    <form action="{{route('logout')}}" method="POST" id="logout">@csrf</form>
+                    <form action="{{route('login.destroy')}}" method="POST" id="logout">@csrf</form>
                 </li>
                 @else
                 <li class="nav-item">
-                    <a href="{{route('register')}}" class="nav-link text-white">Registrar</a>
+                    <a href="{{ route('registrar.index') }}" class="nav-link text-white">Registrar</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('login')}}" class="nav-link text-white">Login</a>
+                    <a href="{{route('login.index')}}" class="nav-link text-white">Login</a>
                 </li>
                 @endif
             </ul>

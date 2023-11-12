@@ -3,27 +3,32 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\AuthRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
-class AuthenticatedSessionController extends Controller
+class AuthController extends Controller
 {
     /**
-     * Display the login view.
+     * Carrega o formulário de Login
+     * @return View
      */
-    public function create(): View
+    public function index(): View
     {
         return view('login');
     }
 
     /**
-     * Handle an incoming authentication request.
+     * Efetua o login do usuário
+     * @param AuthRequest $request
+     * @return void
+     * @throws ValidationException
      */
-    public function store(LoginRequest $request): RedirectResponse
+    public function store(AuthRequest $request): RedirectResponse
     {
         $request->authenticate();
 
@@ -33,7 +38,9 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
-     * Destroy an authenticated session.
+     * Efetua o logout do usuário
+     * @param Request $request
+     * @return RedirectResponse
      */
     public function destroy(Request $request): RedirectResponse
     {
@@ -45,4 +52,6 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
+
 }
