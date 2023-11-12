@@ -33,4 +33,19 @@ class Gasto extends Model
         }
         return $gastos;
     }
+
+    /**
+     * Todos os gastos do mês informado
+     * @param int $month
+     * @return array
+     */
+    public static function byMonth(int $user_id, int $month): array
+    {
+        $gastos = self::where('user_id', '=', $user_id)->whereMonth('data', $month)->join('categorias', 'id_categoria', '=', 'categoria_id')->get()->toArray();
+
+        foreach ($gastos as &$g){
+            $g['data'] = Carbon::createFromFormat('Y-m-d', $g['data'])->format('d/m/Y');
+        }
+        return $gastos;
+    }
 }

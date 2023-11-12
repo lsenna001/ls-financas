@@ -24,7 +24,10 @@
             @foreach($despesas as $d)
             <tr>
                 <td>{{$d['descricao']}}</td>
-                <td class="text-warning fw-bold">R${{number_format($d['valor'], 2, ',', '.')}}</td>
+                <td>
+                    <div class="badge bg-warning">
+                        R${{number_format($d['valor'], 2, ',', '.')}}</td>
+                    </div>
                 <td>
                     <div class="badge bg-info">
                         {{$d['categoria']['nome_categoria']}}

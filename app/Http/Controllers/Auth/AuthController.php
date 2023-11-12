@@ -32,6 +32,10 @@ class AuthController extends Controller
     {
         $request->authenticate();
 
+        $request->user()->update([
+            'last_access' => date('Y-m-d H:i:s')
+        ]);
+
         $request->session()->regenerate();
 
         return redirect()->intended(RouteServiceProvider::HOME);

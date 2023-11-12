@@ -21,9 +21,9 @@ document.addEventListener("DOMContentLoaded", function (e) {
     });
 
     const despesasCategorias = new Chart(document.querySelector("#despesasCategoria"), {
-        type: "doughnut",
+        type: "bar",
         data: {
-            labels: ['Saúde', 'Alimentação', 'Educação', 'Automobilistica'],
+            labels: ['Saúde', 'Alimentação', 'Educação', 'Pessoal'],
             datasets: [{
                 label: "Qtd de Despesas: ",
                 data: [2, 5, 3, 2]

@@ -24,4 +24,15 @@ class Despesa extends Model
     {
         return $this->hasOne(Categoria::class, 'id_categoria', 'categoria_id');
     }
+
+    /**
+     * Traz todas as despesas do usuário que está próxima do vencimento
+     * @param int $user_id
+     * @param int $day
+     * @return array
+     */
+    public static function aboutExpire(int $user_id, int $day): array
+    {
+        return self::where('user_id', '=', $user_id)->where('dia_vencimento', '>', $day)->get()->toArray();
+    }
 }

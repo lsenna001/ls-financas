@@ -29,12 +29,19 @@
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text">Categoria</span>
-            <select name="categoria_id" class="form-select">
-                <option value="">-- Selecione uma categoria --</option>
+            <input type="text" list="categoria" name="categoria" class="form-select">
+            <datalist id="categoria">
                 @foreach($categorias as $cat)
-                <option value="{{$cat['id_categoria']}}" {{isset($despesa) ? ($despesa['categoria_id'] === $cat['id_categoria'] ? 'selected' : '') : ''}}>{{$cat['nome_categoria']}}</option>
+                    <option value="{{ $cat['nome_categoria'] }}"></option>
                 @endforeach
-            </select>
+            </datalist>
+
+{{--            <select name="categoria_id" class="form-select">--}}
+{{--                <option value="">-- Selecione uma categoria --</option>--}}
+{{--                @foreach($categorias as $cat)--}}
+{{--                <option value="{{$cat['id_categoria']}}" {{isset($despesa) ? ($despesa['categoria_id'] === $cat['id_categoria'] ? 'selected' : '') : ''}}>{{$cat['nome_categoria']}}</option>--}}
+{{--                @endforeach--}}
+{{--            </select>--}}
         </div>
         <div class="d-flex">
             <a href="{{route('despesas.index')}}" class="btn btn-sm btn-warning p-2 m-1 w-50 text-white">

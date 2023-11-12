@@ -37,9 +37,17 @@ class DespesaController extends Controller
         $validated = $request->validate([
             'valor' => 'required',
             'dia_vencimento' => 'required|numeric',
-            'categoria_id' => 'required|numeric',
+            'categoria' => 'required|string',
             'descricao' => 'required'
         ]);
+
+        $cat = Categoria::where('nome_categoria', 'like', '%'.$validated['categoria'].'%')->first();
+
+        //Se a categoria não existir, inclui ela na tabela
+        if(empty($cat))
+            $cat = Categoria::create(['nome_categoria' => ucfirst($validated['categoria'])]);
+
+        $validated['categoria_id'] = $cat->id_categoria;
 
         $validated['valor'] = str_replace('.', '', $validated['valor']);
         $validated['valor'] = str_replace(',', '.', $validated['valor']);
@@ -100,7 +108,7 @@ class DespesaController extends Controller
     public function destroy($id): RedirectResponse
     {
         $despesa = Despesa::findOrFail($id);
-        
+
         $despesa->delete();
 
         return redirect(route('despesas.index'))->with('msg', ['type' => 'success', 'msg' => 'Despesa removida!']);
