@@ -12,11 +12,12 @@ class GastoController extends Controller
 {
     /**
      * Carrega a lista com todos os gastos do usuário
+     *
      * @return View
      */
     public function index(): View
     {
-        $gastos = Gasto::getGastos(auth()->user()->id);
+        $gastos = Gasto::where('user_id', '=', auth()->user()->id)->with('categoria')->get()->toArray();
 
         $total = array_sum(array_column($gastos, 'valor'));
 
@@ -25,16 +26,19 @@ class GastoController extends Controller
 
     /**
      * Carrega o formulário de inserção de gastos
+     *
      * @return View
      */
     public function create(): View
     {
         $categorias = Categoria::all();
+
         return view('gastos.form', ['categorias' => $categorias, 'activeGastos' => 'active']);
     }
 
     /**
      * Recebe os dados do formulário de novos gastos e salva
+     *
      * @param GastoStoreRequest $request Validação
      * @return RedirectResponse
      */
@@ -42,61 +46,84 @@ class GastoController extends Controller
     {
         $validated = $request->safe()->all();
 
-        $gasto = new Gasto($validated);
-        $gasto->user_id = auth()->user()->id;
+        $cat = Categoria::where('nome_categoria', 'like', '%'. $validated['categoria'] .'%')->first();
 
-        $gasto->save();
+        if(empty($cat))
+            $cat = Categoria::create(['nome_categoria' => ucfirst($validated['categoria'])]);
+
+        $validated['categoria_id'] = $cat->id_categoria;
+        $validated['valor'] = str_replace(',', '.', str_replace('.', '', $validated['valor']));
+        $validated['user_id'] = auth()->user()->id;
+
+        Gasto::create($validated);
 
         return redirect(route('gastos.index'))->with('msg', ['type' => 'success', 'msg' => 'Gasto inserido com sucesso!']);
     }
 
     /**
      * Carrega o formulário para editar um gasto
-     * @param int $gasto_id Id do Gasto
+     *
+     * @param int $id_gasto Código do Gasto
      * @return View|RedirectResponse
      */
-    public function edit(int $gasto_id): View|RedirectResponse
+    public function edit(int $id_gasto): View|RedirectResponse
     {
-        $gasto = Gasto::where('id_gasto', '=', $gasto_id)->first();
+        $gasto = Gasto::where('id_gasto', '=', $id_gasto)->where('user_id', '=', auth()->user()->id)->first();
 
-        if(empty($gasto) or $gasto->user_id !== auth()->user()->id)
+        if(empty($gasto))
             return redirect(route('gastos.index'))->with('msg', ['type' => 'danger', 'msg' => 'Gasto não encontrado']);
 
+        $gasto->valor = number_format($gasto->valor, 2, ',', '.');
+
         $categorias = Categoria::all();
+
         return view('gastos.form', ['gasto' => $gasto, 'categorias' => $categorias, 'activeGastos' => 'active']);
 
     }
 
     /**
      * Recebe os dados do formulário de edição do gasto e altera
-     * @param int $gasto_id Id do Gasto
-     * @param GastoStoreRequest $request Validação do Formulário
+     *
+     * @param int $id_gasto Id do Gasto
+     * @param GastoStoreRequest $request Injeção de Dependência do Laravel
      * @return RedirectResponse
      */
-    public function update(int $gasto_id, GastoStoreRequest $request): RedirectResponse
+    public function update(int $id_gasto, GastoStoreRequest $request): RedirectResponse
     {
-        $gasto = Gasto::where('id_gasto', '=', $gasto_id)->first();
+        $gasto = Gasto::where('id_gasto', '=', $id_gasto)->where('user_id', '=', auth()->user()->id)->with('categoria')->first();
 
-        if(empty($gasto) or $gasto->user_id !== auth()->user()->id)
+        if(empty($gasto))
             return redirect(route('gastos.index'))->with('msg', ['type' => 'danger', 'msg' => 'Gasto não encontrado']);
 
         $validated = $request->safe()->all();
 
+        //Caso a categoria editada não exista, insere na tabela de categorias
+        $cat = Categoria::where('nome_categoria', 'like', '%'. $validated['categoria'] .'%')->first();
+
+        if(empty($cat))
+            $cat = Categoria::create(['nome_categoria' => ucfirst($validated['categoria'])]);
+
         $gasto->descricao = $validated['descricao'];
-        $gasto->valor = $validated['valor'];
-        $gasto->categoria_id = $validated['categoria_id'];
+        $gasto->valor = str_replace(',', '.', str_replace('.', '', $validated['valor']));
         $gasto->data = $validated['data'];
+        $gasto->categoria_id = $cat->id_categoria;
+
         $gasto->update();
 
         return redirect(route('gastos.index'))->with('msg', ['type' => 'success', 'msg' => 'Gasto alterado']);
     }
 
-
-    public function destroy(int $gasto_id): RedirectResponse
+    /**
+     * Remove o gasto informado
+     *
+     * @param int $gasto_id Código do Gasto
+     * @return RedirectResponse
+     */
+    public function destroy(int $id_gasto): RedirectResponse
     {
-        $gasto = Gasto::where('id_gasto', '=', $gasto_id)->first();
+        $gasto = Gasto::where('id_gasto', '=', $id_gasto)->where('user_id', '=', auth()->user()->id)->first();
 
-        if(empty($gasto) or $gasto->user_id !== auth()->user()->id)
+        if(empty($gasto))
             return redirect(route('gastos.index'))->with('msg', ['type' => 'danger', 'msg' => 'Gasto não encontrado']);
 
         $gasto->delete();

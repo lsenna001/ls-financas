@@ -6,7 +6,8 @@
             <i class="fas fa-money-check-alt fa-2x px-3"></i>
             <h3 class="fs-3">{{ isset($gasto) ? 'Alterar' : 'Inserir novo' }} Gasto</h3>
         </div>
-        <form action="{{ isset($gasto) ? route('gastos.update', $gasto->id_gasto) : route('gastos.store') }}" method="POST" style="width: 30rem;">
+        <form action="{{ isset($gasto) ? route('gastos.update', $gasto->id_gasto) : route('gastos.store') }}"
+              method="POST" style="width: 30rem;">
             @csrf
             @isset($gasto)
                 @method('put')
@@ -14,7 +15,8 @@
             <div class="input-group mb-3">
                 <span class="input-group-text">Descrição</span>
                 <input type="text" name="descricao" class="form-control @error('descricao') is-invalid @enderror"
-                       placeholder="Descrição do Gasto" value="{{ isset($gasto) ? $gasto->descricao : old('descricao') }}">
+                       placeholder="Descrição do Gasto"
+                       value="{{ isset($gasto) ? $gasto->descricao : old('descricao') }}">
                 @error('descricao')
                 <div class="invalid-feedback">
                     {{$errors->first('descricao')}}
@@ -33,7 +35,7 @@
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text">Valor</span>
-                <input type="text" name="valor" class="form-control @error('valor') is-invalid @enderror"
+                <input type="text" name="valor" class="form-control money @error('valor') is-invalid @enderror"
                        placeholder="Valor" value="{{ isset($gasto) ? $gasto->valor : old('valor') }}">
                 @error('valor')
                 <div class="invalid-feedback">
@@ -43,15 +45,18 @@
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text">Categoria</span>
-                <select name="categoria_id" class="form-select @error('categoria_id') is-invalid @enderror">
-                    <option value="">-- Selecione uma categoria --</option>
+                <input type="text" name="categoria" list="categoria"
+                       class="form-select @error('categoria') is-invalid @enderror"
+                       value="{{ isset($gasto) ? $gasto->categoria->nome_categoria : old('categoria') }}"
+                       placeholder="Categoria">
+                <datalist id="categoria">
                     @foreach($categorias as $cat)
-                        <option value="{{ $cat->id_categoria }}" {{ isset($gasto) && $gasto->categoria_id == $cat->id_categoria ? 'selected' : (old('categoria_id') == $cat->id_categoria ? 'selected' : '') }}>{{ $cat->nome_categoria }}</option>
+                        <option value="{{ $cat->nome_categoria }}"></option>
                     @endforeach
-                </select>
-                @error('categoria_id')
+                </datalist>
+                @error('categoria')
                 <div class="invalid-feedback">
-                    {{$errors->first('categoria_id')}}
+                    {{ $errors->first('categoria') }}
                 </div>
                 @enderror
             </div>

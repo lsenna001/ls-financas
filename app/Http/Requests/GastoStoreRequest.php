@@ -15,17 +15,32 @@ class GastoStoreRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Define as regras de validação para o formulário de gastos.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array
      */
     public function rules(): array
     {
         return [
-            'descricao' => 'required',
-            'data' => 'required',
-            'valor' => 'required',
-            'categoria_id' => 'required'
+            'descricao' => ['required'],
+            'data' => ['required'],
+            'valor' => ['required'],
+            'categoria' => ['required']
+        ];
+    }
+
+    /**
+     * Define as mensagens de validação para o formulário de gastos.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'descricao.required' => 'O campo Descrição é obrigatório',
+            'data.required' => 'O campo Data é obrigatório',
+            'valor.required' => 'O campo Valor é obrigatório',
+            'categoria.required' => 'O campo Categoria é obrigatório',
         ];
     }
 }

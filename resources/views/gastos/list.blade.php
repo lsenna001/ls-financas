@@ -1,3 +1,4 @@
+@php use Carbon\Carbon; @endphp
 @extends('base/base')
 
 @section('content')
@@ -25,23 +26,31 @@
                 @foreach($gastos as $g)
                     <tr>
                         <td>{{ $g['descricao']}}</td>
-                        <td class="text-danger fw-bold">R${{ number_format($g['valor'], 2, ',', '.')}}</td>
-                        <td>{{ $g['data'] }}</td>
+                        <td>
+                            <div class="badge bg-danger">
+                                R${{ number_format($g['valor'], 2, ',', '.')}}
+                            </div>
+                        </td>
+                        <td>{{ Carbon::parse($g['data'])->format('d/m/Y') }}</td>
                         <td>
                             <div class="badge bg-info rounded-3">
-                                {{ $g['nome_categoria'] }}
+                                {{ $g['categoria']['nome_categoria'] }}
                             </div>
                         </td>
                         <td>
-                            <a href="{{ route('gastos.edit', $g['id_gasto']) }}" class="btn btn-sm btn-warning rounded-pill text-white">
+                            <a href="{{ route('gastos.edit', $g['id_gasto']) }}"
+                               class="btn btn-sm btn-warning rounded-pill text-white">
                                 <i class="fa fa-edit"></i>
                                 Editar
                             </a>
-                            <a href="{{ route('gastos.destroy', $g['id_gasto']) }}" class="btn btn-sm btn-danger rounded-pill" onclick="event.preventDefault();document.querySelector('#deleteGasto{{ $g['id_gasto'] }}').submit()">
+                            <a href="{{ route('gastos.destroy', $g['id_gasto']) }}"
+                               class="btn btn-sm btn-danger rounded-pill"
+                               onclick="event.preventDefault();document.querySelector('#deleteGasto{{ $g['id_gasto'] }}').submit()">
                                 <i class="fa fa-trash"></i>
                                 Remover
                             </a>
-                            <form action="{{ route('gastos.destroy', $g['id_gasto']) }}" method="POST" id="deleteGasto{{ $g['id_gasto'] }}">@csrf @method('delete')</form>
+                            <form action="{{ route('gastos.destroy', $g['id_gasto']) }}" method="POST"
+                                  id="deleteGasto{{ $g['id_gasto'] }}">@csrf @method('delete')</form>
                         </td>
                     </tr>
                 @endforeach

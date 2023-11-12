@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Gasto extends Model
 {
@@ -19,6 +20,16 @@ class Gasto extends Model
     protected $fillable = [
         'descricao', 'data', 'valor', 'categoria_id', 'user_id'
     ];
+
+    /**
+     * Relacionamento com Categoria
+     *
+     * @return HasOne
+     */
+    public function categoria(): HasOne
+    {
+        return $this->hasOne('App\Models\Categoria', 'id_categoria', 'categoria_id');
+    }
 
     /**
      * Todos os gastos do usuário
