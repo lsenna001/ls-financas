@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\DB;
 
 class Despesa extends Model
 {
@@ -34,5 +35,38 @@ class Despesa extends Model
     public static function aboutExpire(int $user_id, int $day): array
     {
         return self::where('user_id', '=', $user_id)->where('dia_vencimento', '>', $day)->get()->toArray();
+    }
+
+
+    /**
+     * Monta um array com total de despesas por categoria
+     *
+     * @return void
+     */
+    public static function byCategories(int $user_id)
+    {
+        $categorias = Categoria::orderBy('nome_categoria')->get()->toArray();
+
+        foreach ($categorias as &$cat){
+            $cat['total'] = self::where('user_id', '=', $user_id)->where('categoria_id', '=', $cat['id_categoria'])->sum('valor');
+        }
+
+        return $categorias;
+    }
+
+    /**
+     * Monta um array com total de despesas por categoria
+     *
+     * @return void
+     */
+    public static function countByCategories(int $user_id)
+    {
+        $categorias = Categoria::orderBy('nome_categoria')->get()->toArray();
+
+        foreach ($categorias as &$cat){
+            $cat['total'] = self::where('user_id', '=', $user_id)->where('categoria_id', '=', $cat['id_categoria'])->get()->count();
+        }
+
+        return $categorias;
     }
 }

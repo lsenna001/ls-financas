@@ -40,8 +40,8 @@
                     class="d-flex justify-content-between align-items-center rounded border-start border-success border-4 bg-body-tertiary py-3">
                     <div class="d-flex flex-column px-2">
                         <div class="fs-6 text-success">Orçamento</div>
-                        <div class="fs-6 fw-bold text-{{ $orcamento < 200 ? 'danger' : 'success' }}">
-                            R$ {{ number_format($receita - ($despesa + $gasto), 2, ',', '.') }}
+                        <div class="fs-6 fw-bold text-{{ $orcamento < 0 ? 'danger' : 'success' }}">
+                            R$ {{ number_format($orcamento, 2, ',', '.') }}
                         </div>
                     </div>
                     <i class="fa fa-envelope-open fa-2x text-success pe-4"></i>
@@ -78,23 +78,129 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header pb-0">
-                        <p class="fs-5">Despesas Mensais</p>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="despesasMensais"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header pb-0">
-                        <p class="fs-5">Despesas por Categoria</p>
+                        <p class="fs-5">Valor de Despesas Fixas por Categoria</p>
                     </div>
                     <div class="card-body">
                         <canvas id="despesasCategoria"></canvas>
                     </div>
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header pb-0">
+                        <p class="fs-5">Valor de Gastos(Este Mês) por Categoria</p>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="gastosCategoria"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header pb-0">
+                        <p class="fs-5">Quantidade de Despesas Fixas por Categoria</p>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="despesasQuantidade"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header pb-0">
+                        <p class="fs-5">Quantidade de Gastos(Este Mês) por Categoria</p>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="gastosQuantidade"></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+@endsection
+
+@section('extra_script')
+    <script>
+        $(document).ready(function () {
+            const despesasCategorias = new Chart($("#despesasCategoria"), {
+                type: "bar",
+                data: {
+                    labels: <?= json_encode(array_column($despesasPorCategoria, 'nome_categoria'), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) ?>,
+                    datasets: [{
+                        label: 'Valor: R$',
+                        data: <?= json_encode(array_column($despesasPorCategoria, 'total'), JSON_PRETTY_PRINT) ?>,
+                        borderWidth: 1,
+                        backgroundColor: '#d3da67'
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            const gastosCategorias = new Chart($("#gastosCategoria"), {
+                type: "bar",
+                data: {
+                    labels: <?= json_encode(array_column($gastosPorCategoria, 'nome_categoria'), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) ?>,
+                    datasets: [{
+                        label: "Valor: R$",
+                        data: <?= json_encode(array_column($gastosPorCategoria, 'total'), JSON_PRETTY_PRINT) ?>
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            const despesasQuantidade = new Chart($("#despesasQuantidade"), {
+                type: "bar",
+                data: {
+                    labels: <?= json_encode(array_column($qtdDespesasCategoria, 'nome_categoria'), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) ?>,
+                    datasets: [{
+                        label: "Quantidade: ",
+                        data: <?= json_encode(array_column($qtdDespesasCategoria, 'total'), JSON_PRETTY_PRINT) ?>,
+                        backgroundColor: '#dee711'
+
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            const gastosQuantidade = new Chart($("#gastosQuantidade"), {
+                type: "bar",
+                data: {
+                    labels: <?= json_encode(array_column($qtdGastosCategoria, 'nome_categoria'), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) ?>,
+                    datasets: [{
+                        label: "Quantidade: ",
+                        data: <?= json_encode(array_column($qtdGastosCategoria, 'total'), JSON_PRETTY_PRINT) ?>,
+                        backgroundColor: '#2d54ba'
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+        });
+    </script>
 @endsection

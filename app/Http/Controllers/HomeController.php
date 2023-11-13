@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\{Despesa, Receita, Gasto};
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -12,6 +13,14 @@ class HomeController extends Controller
      */
     public function index(): View
     {
+        $despesasPorCategoria = Despesa::byCategories(auth()->user()->id);
+
+        $gastosPorCategoria = Gasto::byCategoriesPerMonth(auth()->user()->id, date('m'));
+
+        $qtdDespesasCategoria = Despesa::countByCategories(auth()->user()->id);
+
+        $qtdGastosCategoria = Gasto::countByCategoriesPerMonth(auth()->user()->id, date('m'));
+
         //Soma o valor das receitas do usuário
         $receita = array_sum(
             array_column(Receita::where('user_id', '=', auth()->user()->id)->get()->toArray(), 'valor')
@@ -33,7 +42,11 @@ class HomeController extends Controller
             'despesa' => $despesa,
             'gasto' => $gasto,
             'orcamento' => $receita - ($despesa + $gasto),
-            'vencimento' => count($vencimento)
+            'vencimento' => count($vencimento),
+            'despesasPorCategoria' => $despesasPorCategoria,
+            'gastosPorCategoria' => $gastosPorCategoria,
+            'qtdGastosCategoria' => $qtdGastosCategoria,
+            'qtdDespesasCategoria' => $qtdDespesasCategoria
 
         ]);
     }

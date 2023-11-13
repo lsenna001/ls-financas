@@ -25,6 +25,7 @@
     </main>
 
     @include('base/js')
+    @yield('extra_script')
 </body>
 
 </html>

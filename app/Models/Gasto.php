@@ -59,4 +59,48 @@ class Gasto extends Model
         }
         return $gastos;
     }
+
+    /**
+     * Seleciona todos os gastos do usuário por categoria
+     *
+     * @return array
+     */
+    public static function byCategories(int $user_id): array
+    {
+        $gastos = self::where('user_id', '=', $user_id)->join('categorias', 'id_categoria', '=', 'categoria_id')->get()->toArray();
+
+        return $gastos;
+    }
+
+    /**
+     * Monta um array com total de despesas por categoria
+     *
+     * @return void
+     */
+    public static function byCategoriesPerMonth(int $user_id, int $month)
+    {
+        $categorias = Categoria::orderBy('nome_categoria')->get()->toArray();
+
+        foreach ($categorias as &$cat){
+            $cat['total'] = self::where('user_id', '=', $user_id)->whereMonth('data', $month)->where('categoria_id', '=', $cat['id_categoria'])->sum('valor');
+        }
+
+        return $categorias;
+    }
+
+    /**
+     * Monta um array com total de despesas por categoria
+     *
+     * @return void
+     */
+    public static function countByCategoriesPerMonth(int $user_id, int $month)
+    {
+        $categorias = Categoria::orderBy('nome_categoria')->get()->toArray();
+
+        foreach ($categorias as &$cat){
+            $cat['total'] = self::where('user_id', '=', $user_id)->whereMonth('data', $month)->where('categoria_id', '=', $cat['id_categoria'])->get()->count();
+        }
+
+        return $categorias;
+    }
 }
